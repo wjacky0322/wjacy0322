@@ -18,7 +18,7 @@
 
 | 檔案 | 說明 |
 |---|---|
-| `index.html` | 全部功能，單一檔案（Tailwind CDN，無需 build，開瀏覽器即可） |
+| `index(3).html` | 全部功能，單一檔案（Tailwind CDN，無需 build，開瀏覽器即可） |
 
 ## 本機開啟
 
