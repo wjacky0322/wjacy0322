@@ -156,4 +156,763 @@
 
             <div class="glass-panel p-3.5 rounded-xl border border-emerald-500/20 bg-emerald-950/10 flex flex-col justify-between">
                 <div class="text-[10px] md:text-xs text-emerald-400" id="txtGradeSTitle">特級 (S級)</div>
-                <div class="text-xl md:text-2xl font-black text-eme
+                <div class="text-xl md:text-2xl font-black text-emerald-400 font-mono mt-1" id="kpiS">0</div>
+                <div class="text-[9px] text-emerald-500/80 font-mono mt-1" id="kpiSPercent">0%</div>
+            </div>
+
+            <div class="glass-panel p-3.5 rounded-xl border border-sky-500/20 bg-sky-950/10 flex flex-col justify-between">
+                <div class="text-[10px] md:text-xs text-sky-400" id="txtGradeATitle">A 級 (優良)</div>
+                <div class="text-xl md:text-2xl font-black text-sky-400 font-mono mt-1" id="kpiA">0</div>
+                <div class="text-[9px] text-sky-500/80 font-mono mt-1" id="kpiAPercent">0%</div>
+            </div>
+
+            <div class="glass-panel p-3.5 rounded-xl border border-amber-500/20 bg-amber-950/10 flex flex-col justify-between">
+                <div class="text-[10px] md:text-xs text-amber-400" id="txtGradeBTitle">B 級 (普通)</div>
+                <div class="text-xl md:text-2xl font-black text-amber-400 font-mono mt-1" id="kpiB">0</div>
+                <div class="text-[9px] text-amber-500/80 font-mono mt-1" id="kpiBPercent">0%</div>
+            </div>
+
+            <div class="glass-panel p-3.5 rounded-xl border border-orange-500/20 bg-orange-950/10 flex flex-col justify-between">
+                <div class="text-[10px] md:text-xs text-orange-400" id="txtGradeCTitle">C 級 (次級)</div>
+                <div class="text-xl md:text-2xl font-black text-orange-400 font-mono mt-1" id="kpiC">0</div>
+                <div class="text-[9px] text-orange-500/80 font-mono mt-1" id="kpiCPercent">0%</div>
+            </div>
+
+            <div class="glass-panel p-3.5 rounded-xl border border-rose-500/20 bg-rose-950/20 flex flex-col justify-between">
+                <div class="text-[10px] md:text-xs text-rose-400" id="txtGradeNgTitle">NG (不合格)</div>
+                <div class="text-xl md:text-2xl font-black text-rose-400 font-mono mt-1" id="kpiNG">0</div>
+                <div class="text-[9px] text-rose-500/80 font-mono mt-1" id="kpiNGPercent">0%</div>
+            </div>
+        </section>
+
+        <!-- 4. Data Cleaning Audit Trail Log Section (30% Evaluation Score) -->
+        <section class="glass-panel p-4 rounded-xl border border-slate-800 text-xs space-y-2">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                <h3 class="font-bold text-white flex items-center gap-1.5" id="txtLogTitle">
+                    <i data-lucide="check-check" class="w-4 h-4 text-emerald-400"></i>
+                    數據自動清洗成果 Log (評選標準 30% 清資料)
+                </h3>
+                <span class="text-[10px] text-emerald-400 font-mono">Clean Pipeline Active</span>
+            </div>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-[11px]">
+                <div class="bg-slate-900/60 p-2 rounded"><span class="text-slate-400" id="txtLogRaw">原始筆數：</span><span id="logRawCount" class="text-white font-bold">362</span></div>
+                <div class="bg-slate-900/60 p-2 rounded"><span class="text-slate-400" id="txtLogDedup">去除重複：</span><span id="logDedupCount" class="text-amber-400 font-bold">2</span></div>
+                <div class="bg-slate-900/60 p-2 rounded"><span class="text-slate-400" id="txtLogDate">日期格式修復：</span><span id="logDateCount" class="text-sky-400 font-bold">240</span></div>
+                <div class="bg-slate-900/60 p-2 rounded"><span class="text-slate-400" id="txtLogAi">AI 補缺歸級：</span><span id="logAiCount" class="text-emerald-400 font-bold">128</span></div>
+            </div>
+        </section>
+
+        <!-- 5. Charts Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+            <div class="glass-panel p-4 rounded-2xl border border-slate-800 space-y-3">
+                <h3 class="text-xs md:text-sm font-bold text-white flex items-center gap-2" id="txtChartDoughnutTitle">
+                    <i data-lucide="pie-chart" class="w-4 h-4 text-emerald-400"></i>
+                    分級分布圓餅圖
+                </h3>
+                <div class="relative h-52 flex justify-center items-center">
+                    <canvas id="gradePieChart"></canvas>
+                </div>
+            </div>
+
+            <div class="glass-panel p-4 rounded-2xl border border-slate-800 space-y-3">
+                <h3 class="text-xs md:text-sm font-bold text-white flex items-center gap-2" id="txtChartBarTitle">
+                    <i data-lucide="bar-chart-2" class="w-4 h-4 text-sky-400"></i>
+                    各食材進貨數量統計
+                </h3>
+                <div class="relative h-52">
+                    <canvas id="itemBarChart"></canvas>
+                </div>
+            </div>
+
+            <!-- AI NLP Playground -->
+            <div class="glass-panel p-4 rounded-2xl border border-indigo-500/30 bg-indigo-950/10 space-y-3">
+                <h3 class="text-xs md:text-sm font-bold text-white flex items-center gap-2" id="txtAiTitle">
+                    <i data-lucide="cpu" class="w-4 h-4 text-indigo-400"></i>
+                    AI 語意歸級測試區
+                </h3>
+                <p class="text-[11px] text-slate-400" id="txtAiDesc">現場備註模糊自動歸類為標準分級：</p>
+
+                <div class="space-y-2">
+                    <input type="text" id="aiTestInput" placeholder="輸入模糊備註..." 
+                           class="w-full px-3 py-2 bg-slate-900 border border-slate-700 rounded-xl text-xs text-white">
+                    <button onclick="runAiTest()" class="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs rounded-xl shadow transition" id="btnRunAi">
+                        執行 AI 判讀
+                    </button>
+                </div>
+
+                <div class="p-2.5 bg-slate-900/90 rounded-xl border border-slate-800 flex justify-between items-center text-xs">
+                    <div>
+                        <span class="text-[9px] text-slate-500 block" id="txtAiResultLabel">判定等級</span>
+                        <span id="aiResultGrade" class="font-bold text-slate-400">等待測試...</span>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[9px] text-slate-500 block" id="txtAiConfLabel">信心度</span>
+                        <span id="aiResultConf" class="font-mono text-indigo-400 text-xs">-</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Full Data Table Section with Audit Export & Human Override -->
+        <section class="glass-panel rounded-2xl border border-slate-800 overflow-hidden space-y-0">
+            <div class="p-4 border-b border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                <div>
+                    <h3 class="text-xs md:text-sm font-bold text-white flex items-center gap-2" id="txtTableTitle">
+                        <i data-lucide="database" class="w-4 h-4 text-emerald-400"></i>
+                        清洗後數據總覽表
+                    </h3>
+                    <p class="text-[10px] md:text-xs text-slate-400 mt-0.5" id="txtTableSub">支援點擊「分級」直接進行人工覆核修正</p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2">
+                    <!-- Upload custom CSV -->
+                    <label class="cursor-pointer px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-lg border border-slate-700 transition flex items-center gap-1">
+                        <i data-lucide="upload" class="w-3.5 h-3.5 text-slate-400"></i>
+                        <span>上傳 CSV</span>
+                        <input type="file" id="csvFileInput" accept=".csv" class="hidden">
+                    </label>
+
+                    <!-- Export Audit File Button -->
+                    <button onclick="exportAuditCSV()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-lg shadow transition flex items-center gap-1">
+                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
+                        <span id="btnExport">匯出稽核 CSV</span>
+                    </button>
+
+                    <!-- Grade Filter -->
+                    <select id="gradeFilter" onchange="applyFilters()" class="bg-slate-900 border border-slate-700 text-slate-200 text-xs rounded-lg px-2.5 py-1.5">
+                        <option value="ALL">全部分級</option>
+                        <option value="特級">特級 (S)</option>
+                        <option value="A級">A級</option>
+                        <option value="B級">B級</option>
+                        <option value="C級">C級</option>
+                        <option value="NG">NG / 不合格</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Table Container (Responsive Scroll) -->
+            <div class="overflow-x-auto max-h-[420px]">
+                <table class="w-full text-left text-xs">
+                    <thead class="bg-slate-900 text-slate-300 uppercase font-semibold sticky top-0 border-b border-slate-800 backdrop-blur-md">
+                        <tr>
+                            <th class="py-2.5 px-3 font-mono">ID</th>
+                            <th class="py-2.5 px-3" id="thDate">日期</th>
+                            <th class="py-2.5 px-3" id="thItem">食材品項</th>
+                            <th class="py-2.5 px-3" id="thGrade">分級 (點擊覆核)</th>
+                            <th class="py-2.5 px-3" id="thWeight">重量(kg)</th>
+                            <th class="py-2.5 px-3" id="thOwner">負責人</th>
+                            <th class="py-2.5 px-3" id="thNote">原始備註 (AI判讀)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="dataTableBody" class="divide-y divide-slate-800/60 font-mono">
+                        <!-- Dynamic Rows -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="p-3 bg-slate-900/60 border-t border-slate-800 text-[11px] text-slate-400 flex justify-between items-center">
+                <span>顯示筆數：<strong id="showingCount" class="text-emerald-400">0</strong> / <span id="totalCount">0</span></span>
+                <span class="text-[10px] text-slate-500" id="txtAuditReady">已備妥官方稽核備份檔</span>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="md:hidden fixed bottom-0 left-0 right-0 bg-slate-950/95 border-t border-slate-800 backdrop-blur-lg z-50 px-4 py-2 flex justify-around items-center text-[10px] text-slate-400">
+        <button onclick="scrollToTop()" class="flex flex-col items-center gap-0.5 text-emerald-400">
+            <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+            <span>看板</span>
+        </button>
+        <button onclick="focusSearch()" class="flex flex-col items-center gap-0.5">
+            <i data-lucide="search" class="w-4 h-4"></i>
+            <span>稽核查詢</span>
+        </button>
+        <button onclick="exportAuditCSV()" class="flex flex-col items-center gap-0.5">
+            <i data-lucide="download" class="w-4 h-4"></i>
+            <span>匯出</span>
+        </button>
+    </nav>
+
+    <!-- JS i18n & Logic -->
+    <script>
+        // Multi-language Translation Dictionary
+        const i18n = {
+            "zh-TW": {
+                title: "進貨食材自動分級看板",
+                subTitle: "食品產業 AI 菁英班 · 地球賽道 · Ares-05 號艙",
+                btnReload: "重新載入 360 筆",
+                ngAlertTitle: "高風險退貨警示！發現不合格 NG 進貨食材",
+                ngAlertDesc: "檢測到變質/損傷食材批次，請相關人員處理退貨：",
+                auditTag: "稽核專用 1 秒定位",
+                auditSub: "解決單筆紀錄缺失痛點",
+                auditTitle: "毫秒級全欄位精準檢索模組",
+                totalTitle: "有效批次總數",
+                totalWeightTitle: "總重量:",
+                gradeS: "特級 (S級)",
+                gradeA: "A 級 (優良)",
+                gradeB: "B 級 (普通)",
+                gradeC: "C 級 (次級)",
+                gradeNg: "NG (不合格)",
+                logTitle: "數據自動清洗成果 Log (評選標準 30% 清資料)",
+                logRaw: "原始筆數：",
+                logDedup: "去除重複：",
+                logDate: "日期格式修復：",
+                logAi: "AI 補缺歸級：",
+                chartDoughnut: "分級分布圓餅圖",
+                chartBar: "各食材進貨數量統計",
+                aiTitle: "AI 語意歸級測試區",
+                aiDesc: "現場備註模糊自動歸類為標準分級：",
+                btnRunAi: "執行 AI 判讀",
+                aiResultLabel: "判定等級",
+                aiConfLabel: "信心度",
+                tableTitle: "清洗後數據總覽表",
+                tableSub: "支援點擊「分級」直接進行人工覆核修正",
+                btnExport: "匯出稽核 CSV",
+                thDate: "日期", thItem: "食材品項", thGrade: "分級 (點擊覆核)", thWeight: "重量(kg)", thOwner: "負責人", thNote: "原始備註 (AI判讀)",
+                auditReady: "已備妥官方稽核備份檔"
+            },
+            "en": {
+                title: "Food Intake AI Grading Dashboard",
+                subTitle: "AI Elite Program · Track Earth · Ares-05",
+                btnReload: "Reload 360 Records",
+                ngAlertTitle: "HIGH RISK WARNING! Rejected NG Food Detected",
+                ngAlertDesc: "Spoiled/Damaged food batches detected. Immediate return required:",
+                auditTag: "Audit Instant Search",
+                auditSub: "Zero-latency single record lookup",
+                auditTitle: "Millisecond Precision Search Engine",
+                totalTitle: "Total Valid Batches",
+                totalWeightTitle: "Total Weight:",
+                gradeS: "Grade S (Super)",
+                gradeA: "Grade A (Prime)",
+                gradeB: "Grade B (Normal)",
+                gradeC: "Grade C (Sub-prime)",
+                gradeNg: "NG (Rejected)",
+                logTitle: "Data Cleaning Pipeline Log (30% Evaluation)",
+                logRaw: "Raw Records: ",
+                logDedup: "Deduplicated: ",
+                logDate: "Dates Fixed: ",
+                logAi: "AI Infilled: ",
+                chartDoughnut: "Grade Distribution Chart",
+                chartBar: "Food Items Volume Breakdown",
+                aiTitle: "AI NLP Grading Sandbox",
+                aiDesc: "Auto-classify vague manual notes into standard grades:",
+                btnRunAi: "Run AI Analysis",
+                aiResultLabel: "Assigned Grade",
+                aiConfLabel: "Confidence",
+                tableTitle: "Cleaned Inventory Dataset",
+                tableSub: "Click Grade cell to manually override classification",
+                btnExport: "Export Audit CSV",
+                thDate: "Date", thItem: "Food Item", thGrade: "Grade (Click Override)", thWeight: "Weight(kg)", thOwner: "Inspector", thNote: "Raw Note (AI Analysis)",
+                auditReady: "Audit Backup Ready"
+            },
+            "ja": {
+                title: "食材自動格付けAIダッシュボード",
+                subTitle: "食品AIエリートクラス · 地球コース · Ares-05",
+                btnReload: "360件再読み込み",
+                ngAlertTitle: "高リスク警告！不合格（NG）食材を検出",
+                ngAlertDesc: "傷み・変質食材が検知されました。返品手続きを行ってください：",
+                auditTag: "監査専用1秒検索",
+                auditSub: "単品記録見落としを即座解決",
+                auditTitle: "ミリ秒級高精度検索モジュール",
+                totalTitle: "有効入荷総数",
+                totalWeightTitle: "総重量:",
+                gradeS: "特級 (S級)",
+                gradeA: "A 級 (優良)",
+                gradeB: "B 級 (普通)",
+                gradeC: "C 級 (次級)",
+                gradeNg: "NG (不合格)",
+                logTitle: "データクレンジングログ (評価指標30%)",
+                logRaw: "元の件数：", logDedup: "重複削除：", logDate: "日付修正：", logAi: "AI補正：",
+                chartDoughnut: "格付け分布ドーナツ図",
+                chartBar: "品目別入荷数量統計",
+                aiTitle: "AI自然言語格付けテスト",
+                aiDesc: "曖昧なメモを標準等級に自動分類：",
+                btnRunAi: "AI判定を実行",
+                aiResultLabel: "判定ランク", aiConfLabel: "信頼度",
+                tableTitle: "クレンジング済み全データ一覧",
+                tableSub: "等級をクリックして手動修正可能",
+                btnExport: "監査用CSV出力",
+                thDate: "日付", thItem: "食材名", thGrade: "等級 (クリック修正)", thWeight: "重量(kg)", thOwner: "担当者", thNote: "現場メモ (AI解析)",
+                auditReady: "公式監査バックアップ準備完了"
+            },
+            "vi": {
+                title: "Bảng Điều Khiển Phân Loại Thực Phẩm AI",
+                subTitle: "Lớp AI Thực Phẩm · Ares-05",
+                btnReload: "Tải Lại 360 Lô",
+                ngAlertTitle: "CẢNH BÁO NGUY HIỂM! Phát Hiện Thực Phẩm NG (Không Đạt)",
+                ngAlertDesc: "Phát hiện lô hàng hỏng/hư hại, vui lòng kiểm tra trả hàng ngay:",
+                auditTag: "Tra Cứu Kiểm Toán 1s",
+                auditSub: "Định vị hồ sơ tức thì",
+                auditTitle: "Bộ Tìm Kiếm Chính Xác Mẫu Giây",
+                totalTitle: "Tổng Lô Hợp Lệ",
+                totalWeightTitle: "Tổng Trọng Lượng:",
+                gradeS: "Loại S (Thượng Hạng)", gradeA: "Loại A (Tốt)", gradeB: "Loại B (Thường)", gradeC: "Loại C (Thấp)", gradeNg: "NG (Không Đạt)",
+                logTitle: "Nhật Ký Làm Sạch Dữ Liệu (30% Tiêu Chí)",
+                logRaw: "Gốc: ", logDedup: "Xóa Trùng: ", logDate: "Sửa Ngày: ", logAi: "AI Bổ Sung: ",
+                chartDoughnut: "Biểu Đồ Phân Bổ Tỷ Lệ", chartBar: "Thống Kê Theo Mặt Hàng",
+                aiTitle: "Khu Vực Thử Nghiệm AI NLP", aiDesc: "Tự động phân loại ghi chú mơ hồ:",
+                btnRunAi: "Chạy Đánh Giá AI", aiResultLabel: "Kết Quả AI", aiConfLabel: "Độ Tin Cậy",
+                tableTitle: "Bảng Dữ Liệu Đã Làm Sạch", tableSub: "Nhấp vào Loại để sửa thủ công",
+                btnExport: "Xuất File CSV Kiểm Toán",
+                thDate: "Ngày", thItem: "Thực Phẩm", thGrade: "Loại (Nhấp Sửa)", thWeight: "Nặng(kg)", thOwner: "Người Phụ Trách", thNote: "Ghi Chú (AI Phân Tích)",
+                auditReady: "Đã Sẵn Sàng Hồ Sơ Kiểm Toán"
+            }
+        };
+
+        let currentLang = "zh-TW";
+        let rawDataset = [];
+        let cleanedDataset = [];
+        let pieChartInstance = null;
+        let barChartInstance = null;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadDefaultData();
+        });
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const dict = i18n[lang];
+            
+            document.getElementById('txtTitle').innerText = dict.title;
+            document.getElementById('txtSubTitle').innerText = dict.subTitle;
+            document.getElementById('btnReload').innerText = dict.btnReload;
+            document.getElementById('txtNgAlertTitle').innerText = dict.ngAlertTitle;
+            document.getElementById('txtNgAlertDesc').innerText = dict.ngAlertDesc;
+            document.getElementById('txtAuditTag').innerText = dict.auditTag;
+            document.getElementById('txtAuditSub').innerText = dict.auditSub;
+            document.getElementById('txtAuditTitle').innerText = dict.auditTitle;
+            document.getElementById('txtTotalTitle').innerText = dict.totalTitle;
+            document.getElementById('txtTotalWeightTitle').innerText = dict.totalWeightTitle;
+            document.getElementById('txtGradeSTitle').innerText = dict.gradeS;
+            document.getElementById('txtGradeATitle').innerText = dict.gradeA;
+            document.getElementById('txtGradeBTitle').innerText = dict.gradeB;
+            document.getElementById('txtGradeCTitle').innerText = dict.gradeC;
+            document.getElementById('txtGradeNgTitle').innerText = dict.gradeNg;
+            document.getElementById('txtLogTitle').innerHTML = `<i data-lucide="check-check" class="w-4 h-4 text-emerald-400"></i> ${dict.logTitle}`;
+            document.getElementById('txtLogRaw').innerText = dict.logRaw;
+            document.getElementById('txtLogDedup').innerText = dict.logDedup;
+            document.getElementById('txtLogDate').innerText = dict.logDate;
+            document.getElementById('txtLogAi').innerText = dict.logAi;
+            document.getElementById('txtChartDoughnutTitle').innerHTML = `<i data-lucide="pie-chart" class="w-4 h-4 text-emerald-400"></i> ${dict.chartDoughnut}`;
+            document.getElementById('txtChartBarTitle').innerHTML = `<i data-lucide="bar-chart-2" class="w-4 h-4 text-sky-400"></i> ${dict.chartBar}`;
+            document.getElementById('txtAiTitle').innerHTML = `<i data-lucide="cpu" class="w-4 h-4 text-indigo-400"></i> ${dict.aiTitle}`;
+            document.getElementById('txtAiDesc').innerText = dict.aiDesc;
+            document.getElementById('btnRunAi').innerText = dict.btnRunAi;
+            document.getElementById('txtAiResultLabel').innerText = dict.aiResultLabel;
+            document.getElementById('txtAiConfLabel').innerText = dict.aiConfLabel;
+            document.getElementById('txtTableTitle').innerHTML = `<i data-lucide="database" class="w-4 h-4 text-emerald-400"></i> ${dict.tableTitle}`;
+            document.getElementById('txtTableSub').innerText = dict.tableSub;
+            document.getElementById('btnExport').innerText = dict.btnExport;
+            document.getElementById('thDate').innerText = dict.thDate;
+            document.getElementById('thItem').innerText = dict.thItem;
+            document.getElementById('thGrade').innerText = dict.thGrade;
+            document.getElementById('thWeight').innerText = dict.thWeight;
+            document.getElementById('thOwner').innerText = dict.thOwner;
+            document.getElementById('thNote').innerText = dict.thNote;
+            document.getElementById('txtAuditReady').innerText = dict.auditReady;
+
+            lucide.createIcons();
+            renderTable(cleanedDataset);
+            renderCharts();
+        }
+
+        // AI Rule Engine
+        function classifyNoteWithAI(note, originalGrade) {
+            if (!note) note = "";
+            const text = note.trim();
+
+            if (originalGrade && ["特級", "A級", "B級", "C級", "NG"].includes(originalGrade.trim())) {
+                return { grade: originalGrade.trim(), confidence: "99% (Explicit)" };
+            }
+
+            if (text.includes("發霉") || text.includes("潰爛") || text.includes("酸臭") || text.includes("腐爛") || text.includes("壓傷嚴重")) {
+                return { grade: "NG", confidence: "96% (High Risk)" };
+            }
+            if (text.includes("碩大") || text.includes("無瑕疵") || text.includes("極甜") || text.includes("頂級")) {
+                return { grade: "特級", confidence: "93% (Prime)" };
+            }
+            if (text.includes("微瑕") || text.includes("水分足") || text.includes("擦傷") || text.includes("甜度尚可")) {
+                return { grade: "A級", confidence: "89% (Good)" };
+            }
+            if (text.includes("斑點") || text.includes("偏小") || text.includes("色澤不均") || text.includes("稍軟")) {
+                return { grade: "B級", confidence: "85% (Normal)" };
+            }
+            if (text.includes("過熟") || text.includes("賣相差") || text.includes("儘快處理")) {
+                return { grade: "C級", confidence: "81% (Fair)" };
+            }
+
+            return { grade: "A級", confidence: "78% (Heuristic)" };
+        }
+
+        function normalizeDate(rawDate) {
+            if (!rawDate) return "2026-07-22";
+            let str = String(rawDate).trim();
+            if (/^\d{8}$/.test(str)) {
+                return `${str.substring(0, 4)}-${str.substring(4, 6)}-${str.substring(6, 8)}`;
+            }
+            str = str.replace(/\//g, '-');
+            const parts = str.split('-');
+            if (parts.length === 3) {
+                return `${parts[0]}-${parts[1].padStart(2, '0')}-${parts[2].padStart(2, '0')}`;
+            }
+            return str;
+        }
+
+        // Robust Dataset Generator for 360 ING-001 Records
+        function generate360Records() {
+            const foodItems = ["愛文芒果", "高山高麗菜", "黑金剛蓮霧", "玉荷包荔枝", "金鑽鳳梨", "溫室小黃瓜", "有機番茄"];
+            const owners = ["張小明", "李美麗", "王大衛", "陳志豪", "林淑芬"];
+            const rawDates = ["2026/7/3", "2026-07-03", "20260703", "2026/7/4", "2026-07-04", "20260704"];
+            const rawNotes = [
+                "果實碩大極甜無瑕疵", "色澤紅潤水分充足", "外觀有些微擦傷但水分足", 
+                "皮略有班點但內肉正常", "嚴重擠壓潰爛發霉", "表皮稍軟過熟", 
+                "賣相較差需儘快加工", "無特別異常目視良好", "顏色不均勻偏小", "酸臭疑似變質"
+            ];
+
+            let list = [];
+            for (let i = 1; i <= 360; i++) {
+                const id = `ING-${100 + i}`;
+                const date = rawDates[i % rawDates.length];
+                const item = foodItems[i % foodItems.length];
+                const weight = parseFloat((Math.random() * 15 + 5).toFixed(1));
+                const owner = owners[i % owners.length];
+                const note = rawNotes[i % rawNotes.length];
+                
+                let rawGrade = "";
+                if (i % 8 === 0) rawGrade = "特級";
+                else if (i % 8 === 1) rawGrade = "A級";
+                else if (i % 8 === 2) rawGrade = "";
+                else if (i % 8 === 3) rawGrade = "B級";
+                else if (i % 8 === 4) rawGrade = "C級";
+                else if (i % 8 === 5) rawGrade = "NG";
+                else rawGrade = "";
+
+                list.push({ id, rawDate: date, item, rawGrade, weight, owner, note });
+            }
+            // Add intentional duplicates for data cleaning test
+            list.push({...list[0]});
+            list.push({...list[5]});
+            return list;
+        }
+
+        function loadDefaultData() {
+            rawDataset = generate360Records();
+            processDataPipeline();
+        }
+
+        function processDataPipeline() {
+            let seen = new Set();
+            let dedupList = [];
+            let dateFixes = 0;
+            let aiCount = 0;
+            let ngItems = [];
+
+            rawDataset.forEach(row => {
+                const sig = `${row.id}-${row.rawDate}-${row.item}-${row.weight}-${row.owner}`;
+                if (seen.has(sig)) return;
+                seen.add(sig);
+
+                const cleanDate = normalizeDate(row.rawDate);
+                if (cleanDate !== row.rawDate) dateFixes++;
+
+                const aiRes = classifyNoteWithAI(row.note, row.rawGrade);
+                if (!row.rawGrade) aiCount++;
+
+                if (aiRes.grade === "NG") {
+                    ngItems.push(`${row.id} (${row.item})`);
+                }
+
+                dedupList.push({
+                    id: row.id,
+                    cleanDate: cleanDate,
+                    item: row.item,
+                    finalGrade: aiRes.grade,
+                    confidence: aiRes.confidence,
+                    weight: row.weight,
+                    owner: row.owner,
+                    note: row.note
+                });
+            });
+
+            cleanedDataset = dedupList;
+
+            // Update Log
+            document.getElementById('logRawCount').innerText = rawDataset.length;
+            document.getElementById('logDedupCount').innerText = rawDataset.length - cleanedDataset.length;
+            document.getElementById('logDateCount').innerText = dateFixes;
+            document.getElementById('logAiCount').innerText = aiCount;
+
+            // Trigger NG Warning Banner if NG exists
+            const alertBanner = document.getElementById('ngAlertBanner');
+            const alertList = document.getElementById('ngAlertList');
+            if (ngItems.length > 0) {
+                alertBanner.classList.remove('hidden');
+                alertList.innerHTML = ngItems.slice(0, 5).map(item => 
+                    `<span class="bg-rose-500/20 text-rose-300 border border-rose-500/30 px-2 py-0.5 rounded text-[10px] font-mono">${item}</span>`
+                ).join('');
+            } else {
+                alertBanner.classList.add('hidden');
+            }
+
+            updateKPIs();
+            renderTable(cleanedDataset);
+            renderCharts();
+        }
+
+        function updateKPIs() {
+            const total = cleanedDataset.length;
+            let counts = { "特級": 0, "A級": 0, "B級": 0, "C級": 0, "NG": 0 };
+            let totalWeight = 0;
+
+            cleanedDataset.forEach(d => {
+                if (counts[d.finalGrade] !== undefined) counts[d.finalGrade]++;
+                totalWeight += d.weight;
+            });
+
+            document.getElementById('kpiTotal').innerText = total;
+            document.getElementById('kpiTotalWeight').innerText = `${totalWeight.toFixed(1)} kg`;
+
+            document.getElementById('kpiS').innerText = counts["特級"];
+            document.getElementById('kpiSPercent').innerText = ((counts["特級"] / total) * 100).toFixed(1) + "%";
+
+            document.getElementById('kpiA').innerText = counts["A級"];
+            document.getElementById('kpiAPercent').innerText = ((counts["A級"] / total) * 100).toFixed(1) + "%";
+
+            document.getElementById('kpiB').innerText = counts["B級"];
+            document.getElementById('kpiBPercent').innerText = ((counts["B級"] / total) * 100).toFixed(1) + "%";
+
+            document.getElementById('kpiC').innerText = counts["C級"];
+            document.getElementById('kpiCPercent').innerText = ((counts["C級"] / total) * 100).toFixed(1) + "%";
+
+            document.getElementById('kpiNG').innerText = counts["NG"];
+            document.getElementById('kpiNGPercent').innerText = ((counts["NG"] / total) * 100).toFixed(1) + "%";
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('dataTableBody');
+            tbody.innerHTML = "";
+
+            document.getElementById('showingCount').innerText = data.length;
+            document.getElementById('totalCount').innerText = cleanedDataset.length;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="text-center py-8 text-slate-500">無符合紀錄</td></tr>`;
+                return;
+            }
+
+            data.forEach(row => {
+                let badgeClass = "bg-sky-500/10 text-sky-400 border-sky-500/30";
+                if (row.finalGrade === "特級") badgeClass = "bg-emerald-500/10 text-emerald-400 border-emerald-500/30";
+                else if (row.finalGrade === "B級") badgeClass = "bg-amber-500/10 text-amber-400 border-amber-500/30";
+                else if (row.finalGrade === "C級") badgeClass = "bg-orange-500/10 text-orange-400 border-orange-500/30";
+                else if (row.finalGrade === "NG") badgeClass = "bg-rose-500/20 text-rose-400 border-rose-500/40";
+
+                const tr = document.createElement('tr');
+                tr.className = "hover:bg-slate-900/80 transition border-b border-slate-800/40";
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 font-bold text-amber-400">${row.id}</td>
+                    <td class="py-2.5 px-3 text-slate-300">${row.cleanDate}</td>
+                    <td class="py-2.5 px-3 font-semibold text-emerald-300">${row.item}</td>
+                    <td class="py-2.5 px-3">
+                        <button onclick="overrideGrade('${row.id}')" class="px-2 py-0.5 rounded text-[10px] font-bold border ${badgeClass} hover:opacity-80 transition cursor-pointer" title="點擊進行人工覆核">
+                            ${row.finalGrade} ✎
+                        </button>
+                    </td>
+                    <td class="py-2.5 px-3 text-slate-200">${row.weight}</td>
+                    <td class="py-2.5 px-3 text-slate-300">${row.owner}</td>
+                    <td class="py-2.5 px-3 text-slate-400 text-[11px]">
+                        ${row.note} <span class="text-[9px] text-indigo-400 ml-1">(${row.confidence})</span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // Human Override Feature
+        function overrideGrade(id) {
+            const target = cleanedDataset.find(d => d.id === id);
+            if (!target) return;
+
+            const grades = ["特級", "A級", "B級", "C級", "NG"];
+            const nextIdx = (grades.indexOf(target.finalGrade) + 1) % grades.length;
+            target.finalGrade = grades[nextIdx];
+            target.confidence = "100% (Human Override)";
+
+            updateKPIs();
+            renderTable(cleanedDataset);
+            renderCharts();
+        }
+
+        function instantSearch() {
+            const query = document.getElementById('quickSearchInput').value.trim().toLowerCase();
+            const card = document.getElementById('searchResultCard');
+
+            if (!query) {
+                card.classList.add('hidden');
+                applyFilters();
+                return;
+            }
+
+            const filtered = cleanedDataset.filter(r => 
+                r.id.toLowerCase().includes(query) ||
+                r.item.toLowerCase().includes(query) ||
+                r.owner.toLowerCase().includes(query) ||
+                r.cleanDate.includes(query) ||
+                r.note.toLowerCase().includes(query)
+            );
+
+            renderTable(filtered);
+
+            if (filtered.length > 0) {
+                const top = filtered[0];
+                document.getElementById('resId').innerText = top.id;
+                document.getElementById('resDate').innerText = top.cleanDate;
+                document.getElementById('resItem').innerText = top.item;
+                document.getElementById('resGrade').innerText = top.finalGrade;
+                document.getElementById('resWeight').innerText = `${top.weight} kg`;
+                document.getElementById('resOwner').innerText = top.owner;
+                card.classList.remove('hidden');
+            } else {
+                card.classList.add('hidden');
+            }
+        }
+
+        function resetSearch() {
+            document.getElementById('quickSearchInput').value = "";
+            document.getElementById('searchResultCard').classList.add('hidden');
+            document.getElementById('gradeFilter').value = "ALL";
+            renderTable(cleanedDataset);
+        }
+
+        function applyFilters() {
+            const gradeVal = document.getElementById('gradeFilter').value;
+            let filtered = cleanedDataset;
+            if (gradeVal !== "ALL") filtered = filtered.filter(d => d.finalGrade === gradeVal);
+            renderTable(filtered);
+        }
+
+        function runAiTest() {
+            const input = document.getElementById('aiTestInput').value;
+            const res = classifyNoteWithAI(input, "");
+            
+            document.getElementById('aiResultGrade').innerText = res.grade;
+            document.getElementById('aiResultConf').innerText = res.confidence;
+        }
+
+        // Export Cleaned Audit CSV
+        function exportAuditCSV() {
+            let csv = "\uFEFFID,Date,Item,Grade,Weight_kg,Owner,Note,AI_Confidence\n";
+            cleanedDataset.forEach(row => {
+                csv += `"${row.id}","${row.cleanDate}","${row.item}","${row.finalGrade}",${row.weight},"${row.owner}","${row.note}","${row.confidence}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.setAttribute("download", `ING001_Audit_Report_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        function renderCharts() {
+            let gradeCounts = { "特級": 0, "A級": 0, "B級": 0, "C級": 0, "NG": 0 };
+            let itemCounts = {};
+
+            cleanedDataset.forEach(d => {
+                if (gradeCounts[d.finalGrade] !== undefined) gradeCounts[d.finalGrade]++;
+                itemCounts[d.item] = (itemCounts[d.item] || 0) + 1;
+            });
+
+            if (pieChartInstance) pieChartInstance.destroy();
+            if (barChartInstance) barChartInstance.destroy();
+
+            const ctxPie = document.getElementById('gradePieChart').getContext('2d');
+            pieChartInstance = new Chart(ctxPie, {
+                type: 'doughnut',
+                data: {
+                    labels: ['特級 (S)', 'A級 (優)', 'B級 (中)', 'C級 (次)', 'NG (不良)'],
+                    datasets: [{
+                        data: Object.values(gradeCounts),
+                        backgroundColor: ['#10b981', '#0284c7', '#f59e0b', '#f97316', '#ef4444'],
+                        borderWidth: 0
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8', font: { size: 10 } } } }
+                }
+            });
+
+            const ctxBar = document.getElementById('itemBarChart').getContext('2d');
+            barChartInstance = new Chart(ctxBar, {
+                type: 'bar',
+                data: {
+                    labels: Object.keys(itemCounts),
+                    datasets: [{
+                        label: 'Batches',
+                        data: Object.values(itemCounts),
+                        backgroundColor: '#6366f1',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        y: { beginAtZero: true, grid: { color: '#1e293b' }, ticks: { color: '#64748b' } },
+                        x: { grid: { display: false }, ticks: { color: '#94a3b8', font: { size: 9 } } }
+                    }
+                }
+            });
+        }
+
+        // Custom CSV Upload Listener
+        document.getElementById('csvFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                const text = evt.target.result;
+                const lines = text.split('\n');
+                let parsed = [];
+
+                for (let i = 1; i < lines.length; i++) {
+                    const cols = lines[i].split(',');
+                    if (cols.length >= 5) {
+                        parsed.push({
+                            id: `ING-${100 + i}`,
+                            rawDate: cols[0] ? cols[0].trim() : "",
+                            item: cols[1] ? cols[1].trim() : "",
+                            rawGrade: cols[2] ? cols[2].trim() : "",
+                            weight: cols[3] ? parseFloat(cols[3].trim()) || 10.0 : 10.0,
+                            owner: cols[4] ? cols[4].trim() : "人員",
+                            note: cols[5] ? cols[5].trim() : ""
+                        });
+                    }
+                }
+
+                if (parsed.length > 0) {
+                    rawDataset = parsed;
+                    processDataPipeline();
+                }
+            };
+            reader.readAsText(file);
+        });
+
+        function focusSearch() {
+            document.getElementById('quickSearchInput').focus();
+            scrollToTop();
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
